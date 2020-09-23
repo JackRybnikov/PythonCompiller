@@ -3,7 +3,7 @@ from Token import Token
 from dict import *
 
 
-inp = 'def main():  \n\treturn "222"\n'
+inp = 'def main():  \n\treturn "22  вывфы2"\n'
 lexer = Lexer()
 lexer.reserve(Token(RETURN, 'return'))
 lexer.reserve(Token(DEF, "def"))

@@ -23,19 +23,6 @@ class Lexer():
 
         self.peek = contents[self.index]
 
-        if self.peek == '"':
-            print("Нашли кавычки")
-            s = '"'
-            cond = True
-            while cond:
-                self.index += 1
-                self.peek = contents[self.index]
-                cond = (self.peek != '"')
-                s += self.peek
-                if self.index == len(contents) - 1:
-                    break
-            return Token(STRING, s)
-
         while self.peek == '\t':
             self.indent += 1
             self.index += 1
@@ -54,6 +41,22 @@ class Lexer():
                 self.peek = contents[self.index]
             else:
                 break
+
+        if self.peek == '"':
+            print("Нашли кавычки")
+            s = ''
+            cond = True
+            while cond:
+                s += self.peek
+                self.index += 1
+                self.peek = contents[self.index]
+                cond = (self.peek != '"')
+                if self.index == len(contents) - 1:
+                    break
+            s += self.peek
+            self.index += 1
+            self.peek = contents[self.index]
+            return Token(STRING, s)
 
         if self.peek == "\n":
             self.index += 1
