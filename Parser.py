@@ -3,7 +3,7 @@ from Token import Token
 from dict import *
 
 
-inp = 'def main():  \n\treturn 222\n'
+inp = 'def main():  \n\treturn "222"\n'
 lexer = Lexer()
 lexer.reserve(Token(RETURN, 'return'))
 lexer.reserve(Token(DEF, "def"))
@@ -24,11 +24,9 @@ def const():
     if lookahead.tag == NUM:
         print(lookahead.value)
         match(NUM)
-    elif lookahead.tag == DQM:
-        match(DQM)
+    elif lookahead.tag == STRING:
         print(lookahead.value)
         match(STRING)
-        match(DQM)
     else:
         raise SyntaxError
 
