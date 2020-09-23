@@ -1,0 +1,2 @@
+a = "dasda"
+print(a)

@@ -10,7 +10,6 @@ class Lexer():
         self.words = {}
         self.indent = 0
         self.old_indent = 0
-        self.string = False
 
     def reserve(self, t):
         self.words[t.value] = t
@@ -25,28 +24,17 @@ class Lexer():
         self.peek = contents[self.index]
 
         if self.peek == '"':
-            self.string = not self.string
-            self.index += 1
-            self.peek = contents[self.index]
-            return Token(DQM)
-
-        if self.string:
-            s = ''
+            print("Нашли кавычки")
+            s = '"'
             cond = True
             while cond:
-                s += self.peek
-                if self.index == len(contents) - 1:
-                    break
                 self.index += 1
                 self.peek = contents[self.index]
                 cond = (self.peek != '"')
-
-            w = self.words.get(s)
-            if w is not None:
-                return w
-            w = Token(STRING, s)
-            self.words[s] = w
-            return w
+                s += self.peek
+                if self.index == len(contents) - 1:
+                    break
+            return Token(STRING, s)
 
         while self.peek == '\t':
             self.indent += 1
@@ -60,7 +48,7 @@ class Lexer():
             self.old_indent -= 1
             return Token(DEDENT)
 
-        while (self.index < len(contents) - 1) and not self.string:
+        while self.index < len(contents) - 1:
             if self.peek == ' ':
                 self.index += 1
                 self.peek = contents[self.index]
@@ -73,7 +61,7 @@ class Lexer():
             self.indent = 0
             return Token(NL)
 
-        if self.peek.isdigit() and not self.string:
+        if self.peek.isdigit():
             v = 0
             cond = True
             while cond:
@@ -95,7 +83,6 @@ class Lexer():
                 self.index += 1
                 self.peek = contents[self.index]
                 cond = self.peek.isalpha()
-
             w = self.words.get(s)
             if w is not None:
                 return w
