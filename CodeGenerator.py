@@ -1,2 +1,2 @@
-a = "dasda"
-print(a)
+def ASM(s):
+    a = open("Rybnikov.asm", 'w')
