@@ -1,7 +1,6 @@
 from Token import Token
 from dict import *
 
-
 def is_hex(a):
     set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
     if a in set:
@@ -73,33 +72,30 @@ class Lexer():
             return Token(NL)
 
         if self.peek.isdigit():
+            v = 0
             cond = True
-            condition = True
-            v = int(self.peek)
-            if self.index == len(contents) - 1:
-                condition = False
-            if condition:
+            if self.peek == '0':
+                self.index += 1
+                self.peek = contents[self.index]
+                if self.peek == 'x':
+                    s = ''
+                    self.index += 1
+                    self.peek = contents[self.index]
+                    while cond:
+                        s += self.peek
+                        if self.index == len(contents) - 1:
+                            break
+                        self.index += 1
+                        self.peek = contents[self.index]
+                        cond = is_hex(self.peek)
+                    v = int(s, 16)
+            while cond:
+                v = 10 * v + int(self.peek)
+                if self.index == len(contents) - 1:
+                    break
                 self.index += 1
                 self.peek = contents[self.index]
                 cond = self.peek.isdigit()
-            if self.peek == "x" and v == 0:
-                v = ''
-                while cond:
-                    v += self.peek
-                    if self.index == len(contents) - 1:
-                        break
-                    self.index += 1
-                    self.peek = contents[self.index]
-                    cond = is_hex(self.peek)
-                v = int(v, 16)
-            else:
-                while cond:
-                    v = 10 * v + int(self.peek)
-                    if self.index == len(contents) - 1:
-                        break
-                    self.index += 1
-                    self.peek = contents[self.index]
-                    cond = self.peek.isdigit()
             return Token(NUM, v)
 
         if self.peek.isalpha():

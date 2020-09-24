@@ -1,2 +1,2 @@
-def ASM(s):
-    a = open("Rybnikov.asm", 'w')
+a = "dada"
+print(int(a, 16))

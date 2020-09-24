@@ -3,7 +3,7 @@ from Token import Token
 from dict import *
 
 
-inp = open("open.txt", 'r')
+inp = 'def main():  \n\treturn 0x2e22d2\n'
 lexer = Lexer()
 lexer.reserve(Token(RETURN, 'return'))
 lexer.reserve(Token(DEF, "def"))
@@ -59,3 +59,6 @@ def program():
         match(ENDMARK)
     else:
         raise SyntaxError
+
+
+program()
