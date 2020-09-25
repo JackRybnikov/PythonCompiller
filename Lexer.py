@@ -1,6 +1,7 @@
 from Token import Token
 from dict import *
 
+
 def is_hex(a):
     set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'}
     if a in set:
@@ -17,6 +18,7 @@ class Lexer():
         self.words = {}
         self.indent = 0
         self.old_indent = 0
+        self.spaces = 0
 
     def reserve(self, t):
         self.words[t.value] = t
@@ -35,19 +37,22 @@ class Lexer():
             self.index += 1
             self.peek = contents[self.index]
 
+        while self.index < len(contents) - 1:
+            if self.peek == ' ':
+                self.index += 1
+                self.spaces += 1
+                self.peek = contents[self.index]
+            else:
+                self.indent += self.spaces // 4
+                self.spaces = 0
+                break
+
         if self.old_indent < self.indent:
             self.old_indent += 1
             return Token(INDENT)
         elif self.old_indent > self.indent:
             self.old_indent -= 1
             return Token(DEDENT)
-
-        while self.index < len(contents) - 1:
-            if self.peek == ' ':
-                self.index += 1
-                self.peek = contents[self.index]
-            else:
-                break
 
         if self.peek == '"':
             print("Нашли кавычки")

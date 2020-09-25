@@ -1,0 +1,2 @@
+def alfa():
+    return 0xd1293
