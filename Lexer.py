@@ -54,7 +54,7 @@ class Lexer():
             self.old_indent -= 1
             return Token(DEDENT)
 
-        if self.peek == '"':
+        if self.peek == '"' or self.peek == "'":
             #print("Нашли кавычки")
             s = ''
             cond = True
@@ -62,7 +62,7 @@ class Lexer():
                 s += self.peek
                 self.index += 1
                 self.peek = contents[self.index]
-                cond = (self.peek != '"')
+                cond = (self.peek != '"' and self.peek != "'")
                 if self.index == len(contents) - 1:
                     break
             s += self.peek

@@ -1,4 +1,4 @@
-def main():
-    return 315
+def alfa():
+	return '123'
 
 main()
