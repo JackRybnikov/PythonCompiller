@@ -1,6 +1,0 @@
-def a():
-    return 2
-
-
-
-old_indent
