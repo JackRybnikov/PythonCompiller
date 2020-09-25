@@ -55,7 +55,7 @@ class Lexer():
             return Token(DEDENT)
 
         if self.peek == '"':
-            print("Нашли кавычки")
+            #print("Нашли кавычки")
             s = ''
             cond = True
             while cond:

@@ -1,2 +1,4 @@
-def alfa():
-    return 0xd1293
+def main():
+    return 315
+
+main()

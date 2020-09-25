@@ -15,6 +15,7 @@ def match(l):
     global lookahead
     global inp
     if lookahead.tag == l:
+        print(f"{lookahead.tag}: {lookahead.value}")
         lookahead = lexer.scan(inp)
     else:
         raise SyntaxError
@@ -37,7 +38,7 @@ def return_expr(s):
     global lookahead
     if lookahead.tag == RETURN:
         match(RETURN)
-        s += f"\t\tmov eax, {lookahead.value}\n\t\tret\n"
+        s += f"\tmov eax, {lookahead.value}\n\tret\n"
         const()
         while lookahead.tag == NL:
             match(NL)
@@ -50,23 +51,30 @@ def program(s):
     global lookahead
     lookahead = lexer.scan(inp)
     while lookahead.tag == DEF:
-        if lookahead.tag == DEF:
-            match(DEF)
-            s += f"\t{lookahead.value} PROC\n"
-            list_of_names.append(lookahead.value)
+        match(DEF)
+        s += f"{lookahead.value} PROC\n"
+        list_of_names.append(lookahead.value)
+        match(ID)
+        match(LPAR)
+        match(RPAR)
+        match(COLON)
+        match(NL)
+        match(INDENT)
+        s = return_expr(s)
+        while lookahead.tag == DEDENT:
+            match(DEDENT)
+        s += f"{list_of_names[0]} ENDP\n"
+        while lookahead.tag == NL:
+            match(NL)
+    while lookahead.tag == ID:
+        if lookahead.value in list_of_names:
             match(ID)
+            s += f"invoke {list_of_names[0]}\n"
             match(LPAR)
             match(RPAR)
-            match(COLON)
             match(NL)
-            match(INDENT)
-            s = return_expr(s)
-            while lookahead.tag == DEDENT:
-                match(DEDENT)
-            s += f"\t{list_of_names[0]} ENDP\n"
-            while lookahead.tag == NL:
-                match(NL)
         else:
             raise SyntaxError
     match(ENDMARK)
+    #print(lexer.words)
     return s
