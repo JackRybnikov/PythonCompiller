@@ -16,6 +16,8 @@ class Lexer():
         self.index = 0
         self.peek = ' '
         self.words = {}
+        self.value = {}
+        self.tokens = []
         self.indent = 0
         self.old_indent = 0
         self.spaces = 0
@@ -23,11 +25,16 @@ class Lexer():
     def reserve(self, t):
         self.words[t.value] = t
 
+    def goError(self):
+        return self.line
+
     def scan(self, contents):
         if self.index == len(contents):
             if self.old_indent != 0:
                 self.old_indent -= 1
+                self.tokens.append(DEDENT)
                 return Token(DEDENT)
+            self.tokens.append(ENDMARK)
             return Token(ENDMARK)
 
         self.peek = contents[self.index]
@@ -49,13 +56,15 @@ class Lexer():
 
         if self.old_indent < self.indent:
             self.old_indent += 1
+            self.tokens.append(INDENT)
             return Token(INDENT)
         elif self.old_indent > self.indent:
             self.old_indent -= 1
+            self.tokens.append(DEDENT)
             return Token(DEDENT)
 
-        if self.peek == '"' or self.peek == "'":
-            #print("Нашли кавычки")
+        if self.peek == "'" or self.peek == '"':
+            # print("Нашли кавычки")
             s = ''
             cond = True
             while cond:
@@ -68,6 +77,7 @@ class Lexer():
             s += self.peek
             self.index += 1
             self.peek = contents[self.index]
+            self.tokens.append(STRING)
             return Token(STRING, s)
 
         if self.peek == "\n":
@@ -116,6 +126,8 @@ class Lexer():
             w = self.words.get(s)
             if w is not None:
                 return w
+            if s == "not":
+                return Token(UNAR_NOT)
             w = Token(ID, s)
             self.words[s] = w
             return w

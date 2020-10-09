@@ -1,4 +1,19 @@
 def alfa():
-	return '123'
+	return 0xabcd
+
+def main():
+	return 123
+
+
+def maina():
+	return not not not not 7
+	
+def mainb():
+	return not not not not not 7
 
 main()
+alfa()
+a = not not not not not not 5 + 10 + (20 + 30 )
+maina()
+mainb()
+

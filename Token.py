@@ -1,5 +1,5 @@
 class Token():
-    def __init__(self, tag, value = None):
+    def __init__(self, tag, value = None, priority = 0):
         self.tag = tag
         self.value = value
 
