@@ -1,0 +1,5 @@
+def function():
+    a = 1
+    return 20 if a else "KPI"
+
+function()

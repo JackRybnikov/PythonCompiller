@@ -1,0 +1,7 @@
+def function():
+    a = 3
+    while a < -3:
+		a -= 7
+	return a
+
+function()

@@ -1,0 +1,6 @@
+def function():
+	a = 3
+	a += 10 - 5
+	return a + 10
+
+function()

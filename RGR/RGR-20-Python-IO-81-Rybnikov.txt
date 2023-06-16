@@ -1,0 +1,13 @@
+def function():
+    abba = 1
+    baab = 0
+    cccc = 1
+    nien = 29
+    while nien > 1:
+        cccc = abba + baab
+        baab = abba
+        abba = cccc
+        nien = nien - 1
+    return variable
+
+function()

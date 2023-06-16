@@ -1,0 +1,5 @@
+def function():
+    a = "hello"
+	return 3-2 if a else 2 + 10
+
+function()

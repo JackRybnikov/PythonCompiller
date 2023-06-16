@@ -1,0 +1,7 @@
+def function():
+    a = 2
+    return 20 if a else 55
+
+"asdasdasdasdsa"
+
+function()

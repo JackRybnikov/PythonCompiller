@@ -1,0 +1,10 @@
+def function():
+    a = 5
+    while a > -3:
+        a -= 7
+    return a
+
+def alfa():
+    return function()
+
+alfa()

@@ -1,0 +1,5 @@
+def alfa():
+    a = 5 - 20 + 4 + 19
+    return a
+
+alfa()
